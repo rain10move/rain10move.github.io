@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>商业银行风险管理-核心框架、主要类型与实务方法解析</title>
+<meta name="description" content="系统梳理商业银行风险管理的核心框架，涵盖信用风险、市场风险、操作风险、流动性风险的主要类型、识别评估方法、监管要求与实务管理要点。">
+<meta name="keywords" content="商业银行风险管理,信用风险,市场风险,操作风险,流动性风险,资本充足率,风险控制">
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+<style>
+:root{
+  --navy:#0f2a4a;
+  --navy-deep:#0a1d34;
+  --blue:#1b5e9c;
+  --blue-light:#2f7fc4;
+  --accent:#c8a24a;
+  --bg:#f4f6f9;
+  --card:#ffffff;
+  --line:#dde4ec;
+  --text:#1f2b3a;
+  --text-soft:#5a6b7d;
+  --radius:10px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.75;
+  font-size:16px;
+}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.container{width:min(1180px,92%);margin:0 auto;}
+
+/* ---------- 顶部信息条 ---------- */
+.topbar{
+  background:var(--navy-deep);
+  color:#b9c8d9;
+  font-size:13px;
+  padding:7px 0;
+}
+.topbar .container{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.topbar span.tag{
+  color:var(--accent);
+  letter-spacing:.5px;
+}
+
+/* ---------- 页眉 ---------- */
+.site-header{
+  background:linear-gradient(135deg,#0f2a4a 0%,#17406e 60%,#1b5e9c 100%);
+  color:#fff;
+  padding:16px 0;
+  position:sticky;
+  top:0;
+  z-index:50;
+  box-shadow:0 2px 14px rgba(10,29,52,.25);
+}
+.site-header .container{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand .logo{
+  width:42px;height:42px;
+  border-radius:8px;
+  background:linear-gradient(140deg,var(--accent),#e0c477);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;color:var(--navy-deep);font-size:20px;
+  flex-shrink:0;
+}
+.brand h1{
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:.5px;
+  line-height:1.3;
+}
+.brand p{
+  font-size:12px;
+  color:#a9c0d8;
+  letter-spacing:1px;
+}
+.main-nav ul{
+  list-style:none;
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.main-nav a{
+  display:block;
+  padding:8px 14px;
+  font-size:15px;
+  border-radius:6px;
+  color:#dbe7f3;
+  transition:.2s;
+}
+.main-nav a:hover{
+  background:rgba(255,255,255,.13);
+  color:#fff;
+}
+
+/* ---------- 首屏 ---------- */
+.hero{
+  background:linear-gradient(120deg,#12365c,#1b5e9c 70%,#2f7fc4);
+  color:#fff;
+  padding:64px 0 56px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::after{
+  content:"";
+  position:absolute;
+  right:-120px;top:-120px;
+  width:420px;height:420px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(200,162,74,.28),transparent 68%);
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.5fr 1fr;
+  gap:44px;
+  align-items:center;
+  position:relative;
+  z-index:2;
+}
+.hero h2{
+  font-size:34px;
+  line-height:1.35;
+  margin-bottom:16px;
+  font-weight:600;
+}
+.hero h2 em{
+  font-style:normal;
+  color:#f0d38a;
+}
+.hero p.lead{
+  font-size:16px;
+  color:#d3e2f1;
+  margin-bottom:24px;
+  max-width:640px;
+}
+.hero-actions{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-block;
+  padding:11px 24px;
+  border-radius:6px;
+  font-size:15px;
+  font-weight:500;
+  transition:.2s;
+  cursor:pointer;
+  border:none;
+}
+.btn-primary{
+  background:var(--accent);
+  color:var(--navy-deep);
+}
+.btn-primary:hover{background:#e0c477;}
+.btn-ghost{
+  background:rgba(255,255,255,.12);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.35);
+}
+.btn-ghost:hover{background:rgba(255,255,255,.22);}
+.hero-panel{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:var(--radius);
+  padding:24px;
+  backdrop-filter:blur(3px);
+}
+.hero-panel h3{
+  font-size:16px;
+  margin-bottom:14px;
+  color:#f0d38a;
+  font-weight:600;
+}
+.hero-panel ul{
+  list-style:none;
+}
+.hero-panel li{
+  font-size:14px;
+  color:#d9e6f3;
+  padding:8px 0;
+  border-bottom:1px dashed rgba(255,255,255,.18);
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+.hero-panel li:last-child{border-bottom:none;}
+.hero-panel li span{
+  color:#fff;
+  font-weight:500;
+}
+
+/* ---------- 通用区块 ---------- */
+section{padding:56px 0;}
+.section-head{
+  margin-bottom:32px;
+}
+.section-head .eyebrow{
+  font-size:13px;
+  letter-spacing:2px;
+  color:var(--blue-light);
+  font-weight:600;
+  text-transform:uppercase;
+  display:block;
+  margin-bottom:8px;
+}
+.section-head h2{
+  font-size:26px;
+  color:var(--navy);
+  font-weight:600;
+  position:relative;
+  padding-left:16px;
+}
+.section-head h2::before{
+  content:"";
+  position:absolute;
+  left:0;top:6px;
+  width:5px;height:26px;
+  border-radius:3px;
+  background:var(--accent);
+}
+.section-head p{
+  margin-top:10px;
+  color:var(--text-soft);
+  font-size:15px;
+  max-width:820px;
+}
+
+/* ---------- 风险类型卡片 ---------- */
+.risk-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:22px;
+}
+.risk-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:26px 22px;
+  transition:.25s;
+  border-top:4px solid var(--blue);
+}
+.risk-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 26px rgba(15,42,74,.12);
+}
+.risk-card .icon{
+  width:44px;height:44px;
+  border-radius:9px;
+  background:#e9f1f9;
+  color:var(--blue);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:700;
+  margin-bottom:16px;
+}
+.risk-card h3{
+  font-size:18px;
+  color:var(--navy);
+  margin-bottom:10px;
+  font-weight:600;
+}
+.risk-card p{
+  font-size:14px;
+  color:var(--text-soft);
+  margin-bottom:12px;
+}
+.risk-card ul{
+  list-style:none;
+  font-size:13.5px;
+  color:var(--text-soft);
+}
+.risk-card li{
+  padding-left:16px;
+  position:relative;
+  margin-bottom:6px;
+}
+.risk-card li::before{
+  content:"";
+  position:absolute;
+  left:0;top:9px;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--accent);
+}
+
+/* ---------- 框架流程 ---------- */
+.framework{
+  background:#fff;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.flow{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:18px;
+  counter-reset:step;
+}
+.flow-item{
+  background:var(--bg);
+  border-radius:var(--radius);
+  padding:24px 20px;
+  position:relative;
+  border:1px solid var(--line);
+}
+.flow-item::before{
+  counter-increment:step;
+  content:counter(step,decimal-leading-zero);
+  font-size:26px;
+  font-weight:700;
+  color:#c4d4e6;
+  display:block;
+  margin-bottom:10px;
+  letter-spacing:1px;
+}
+.flow-item h3{
+  font-size:17px;
+  color:var(--navy);
+  margin-bottom:8px;
+  font-weight:600;
+}
+.flow-item p{
+  font-size:14px;
+  color:var(--text-soft);
+}
+
+/* ---------- 两栏内容 ---------- */
+.two-col{
+  display:grid;
+  grid-template-columns:1.6fr 1fr;
+  gap:36px;
+  align-items:start;
+}
+.article-block h3{
+  font-size:19px;
+  color:var(--navy);
+  margin:22px 0 10px;
+  font-weight:600;
+}
+.article-block h3:first-child{margin-top:0;}
+.article-block p{
+  font-size:15px;
+  color:#3d4d5e;
+  margin-bottom:12px;
+}
+.article-block ul{
+  margin:0 0 14px 20px;
+  font-size:15px;
+  color:#3d4d5e;
+}
+.article-block li{margin-bottom:7px;}
+
+.side-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:20px;
+}
+.side-card h4{
+  font-size:16px;
+  color:var(--navy);
+  margin-bottom:14px;
+  font-weight:600;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--line);
+}
+.side-list{
+  list-style:none;
+  font-size:14px;
+}
+.side-list li{
+  padding:9px 0;
+  border-bottom:1px dashed var(--line);
+  color:var(--text-soft);
+  display:flex;
+  gap:10px;
+}
+.side-list li:last-child{border-bottom:none;}
+.side-list .num{
+  color:var(--blue);
+  font-weight:600;
+  flex-shrink:0;
+}
+.side-note{
+  background:#eef4fa;
+  border-left:3px solid var(--blue-light);
+  padding:14px 16px;
+  font-size:13.5px;
+  color:#42566b;
+  border-radius:0 6px 6px 0;
+}
+
+/* ---------- 指标表 ---------- */
+.table-wrap{
+  overflow-x:auto;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+  min-width:640px;
+}
+thead th{
+  background:var(--navy);
+  color:#fff;
+  text-align:left;
+  padding:14px 16px;
+  font-weight:500;
+  white-space:nowrap;
+}
+tbody td{
+  padding:13px 16px;
+  border-bottom:1px solid var(--line);
+  color:#3d4d5e;
+  vertical-align:top;
+}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:nth-child(even){background:#fafcfe;}
+tbody td strong{color:var(--navy);font-weight:600;}
+
+/* ---------- 实务要点 ---------- */
+.practice{
+  background:linear-gradient(135deg,#0f2a4a,#1b5e9c);
+  color:#fff;
+}
+.practice .section-head h2{color:#fff;}
+.practice .section-head h2::before{background:var(--accent);}
+.practice .section-head p{color:#c7d8ea;}
+.practice-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+.practice-item{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--radius);
+  padding:22px;
+}
+.practice-item h3{
+  font-size:17px;
+  margin-bottom:10px;
+  color:#f0d38a;
+  font-weight:600;
+}
+.practice-item p{
+  font-size:14px;
+  color:#d3e2f1;
+}
+
+/* ---------- FAQ ---------- */
+.faq-list{
+  display:grid;
+  gap:14px;
+}
+.faq-item{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.faq-q{
+  width:100%;
+  text-align:left;
+  background:none;
+  border:none;
+  padding:18px 22px;
+  font-size:16px;
+  font-weight:600;
+  color:var(--navy);
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:14px;
+  font-family:inherit;
+}
+.faq-q .mark{
+  color:var(--blue-light);
+  font-size:20px;
+  transition:transform .25s;
+  flex-shrink:0;
+}
+.faq-item.open .faq-q .mark{transform:rotate(45deg);}
+.faq-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease;
+}
+.faq-a p{
+  padding:0 22px 20px;
+  font-size:14.5px;
+  color:var(--text-soft);
+  border-top:1px solid var(--line);
+  padding-top:16px;
+  margin-top:-1px;
+}
+
+/* ---------- 页脚 ---------- */
+.site-footer{
+  background:var(--navy-deep);
+  color:#9fb4c9;
+  padding:44px 0 22px;
+  font-size:14px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:34px;
+  padding-bottom:28px;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.footer-grid h4{
+  color:#fff;
+  font-size:15px;
+  margin-bottom:14px;
+  font-weight:600;
+}
+.footer-grid p{
+  font-size:13.5px;
+  line-height:1.8;
+  color:#8fa6bd;
+}
+.footer-grid ul{list-style:none;font-size:13.5px;}
+.footer-grid li{margin-bottom:9px;}
+.footer-grid a:hover{color:#f0d38a;}
+.footer-bottom{
+  padding-top:18px;
+  text-align:center;
+  font-size:13px;
+  color:#7d93aa;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width:900px){
+  .hero-grid{grid-template-columns:1fr;gap:30px;}
+  .two-col{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .hero h2{font-size:28px;}
+}
+@media (max-width:640px){
+  body{font-size:15px;}
+  .site-header .container{flex-direction:column;align-items:flex-start;}
+  .main-nav ul{gap:2px;}
+  .main-nav a{padding:7px 10px;font-size:14px;}
+  .hero{padding:44px 0 40px;}
+  .hero h2{font-size:23px;}
+  section{padding:40px 0;}
+  .section-head h2{font-size:21px;}
+  .footer-grid{grid-template-columns:1fr;}
+  .topbar .container{justify-content:center;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- 顶部信息条 -->
+<div class="topbar">
+  <div class="container">
+    <span>商业银行风险管理 · 知识梳理与方法参考</span>
+    <span class="tag">风险识别 · 计量 · 控制 · 报告</span>
+  </div>
+</div>
+
+<!-- 页眉 -->
+<header class="site-header">
+  <div class="container">
+    <div class="brand">
+      <div class="logo">险</div>
+      <div>
+        <h1>商业银行风险管理</h1>
+        <p>RISK MANAGEMENT FRAMEWORK</p>
+      </div>
+    </div>
+    <nav class="main-nav" aria-label="主导航">
+      <ul>
+        <li><a href="#types">风险类型</a></li>
+        <li><a href="#framework">管理流程</a></li>
+        <li><a href="#methods">计量方法</a></li>
+        <li><a href="#practice">实务要点</a></li>
+        <li><a href="#faq">常见问题</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- 首屏 -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <h2>理解商业银行风险管理的<br><em>核心框架与实务逻辑</em></h2>
+        <p class="lead">
+          商业银行风险管理，是围绕信用风险、市场风险、操作风险和流动性风险等主要风险类别，
+          通过识别、计量、监测、控制和报告形成闭环的管理体系。它既关系到单家银行的资产质量与经营稳健，
+          也关系到支付结算体系与金融系统的整体稳定。
+        </p>
+        <div class="hero-actions">
+          <a href="#types" class="btn btn-primary">了解风险类型</a>
+          <a href="#framework" class="btn btn-ghost">查看管理流程</a>
+        </div>
+      </div>
+      <aside class="hero-panel" aria-label="风险管理概览">
+        <h3>主要风险类别</h3>
+        <ul>
+          <li>信用风险 <span>违约与集中度</span></li>
+          <li>市场风险 <span>利率·汇率·价格</span></li>
+          <li>操作风险 <span>流程·人员·系统</span></li>
+          <li>流动性风险 <span>期限错配</span></li>
+          <li>其他风险 <span>声誉·战略·合规</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 风险类型 -->
+  <section id="types">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Risk Categories</span>
+        <h2>商业银行的主要风险类型</h2>
+        <p>
+          不同类型的风险来源、传导路径和管理工具各不相同。银行通常按类别分别设定限额、计量模型和报告口径，
+          再通过统一的风险偏好与资本约束进行统筹。
+        </p>
+      </div>
+      <div class="risk-grid">
+        <article class="risk-card">
+          <div class="icon">信</div>
+          <h3>信用风险</h3>
+          <p>交易对手未能按约定履行还款或偿付义务，导致银行发生损失的可能性。</p>
+          <ul>
+            <li>贷款违约与不良资产</li>
+            <li>行业与区域集中度</li>
+            <li>担保与抵质押品管理</li>
+            <li>内部评级与限额控制</li>
+          </ul>
+        </article>
+        <article class="risk-card">
+          <div class="icon">市</div>
+          <h3>市场风险</h3>
+          <p>利率、汇率、股票价格、商品价格等市场因子变动，引起交易账户与银行账户价值波动。</p>
+          <ul>
+            <li>利率风险与重定价缺口</li>
+            <li>汇率风险与外汇敞口</li>
+            <li>交易账簿估值与波动</li>
+            <li>敏感性分析与压力测试</li>
+          </ul>
+        </article>
+        <article class="risk-card">
+          <div class="icon">操</div>
+          <h3>操作风险</h3>
+          <p>由不完善或失败的内部流程、人员行为、系统缺陷以及外部事件造成损失的风险。</p>
+          <ul>
+            <li>流程控制与授权分离</li>
+            <li>员工行为与道德风险</li>
+            <li>系统安全与业务连续性</li>
+            <li>外包与第三方管理</li>
+          </ul>
+        </article>
+        <article class="risk-card">
+          <div class="icon">流</div>
+          <h3>流动性风险</h3>
+          <p>银行无法以合理成本及时获得充足资金，以满足到期债务支付或资产增长需求的风险。</p>
+          <ul>
+            <li>资产负债期限错配</li>
+            <li>优质流动性资产储备</li>
+            <li>融资来源分散度</li>
+            <li>压力情景下的现金流测算</li>
+          </ul>
+        </article>
+        <article class="risk-card">
+          <div class="icon">合</div>
+          <h3>合规与法律风险</h3>
+          <p>因违反法律法规、监管规定或合同约定，可能遭受法律制裁、监管处罚或声誉损失。</p>
+          <ul>
+            <li>反洗钱与客户尽职调查</li>
+            <li>消费者权益保护</li>
+            <li>合同与文本审查</li>
+            <li>监管报送与整改跟踪</li>
+          </ul>
+        </article>
+        <article class="risk-card">
+          <div class="icon">声</div>
+          <h3>声誉与战略风险</h3>
+          <p>外部评价恶化或战略决策偏差，对客户关系、融资能力和长期竞争力产生不利影响。</p>
+          <ul>
+            <li>舆情监测与应对机制</li>
+            <li>业务结构与发展节奏</li>
+            <li>新产品风险评估</li>
+            <li>信息披露与沟通</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 管理流程 -->
+  <section id="framework" class="framework">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Process</span>
+        <h2>风险管理的基本流程</h2>
+        <p>
+          一个较为完整的管理闭环，通常包含风险识别、计量评估、监测预警、控制缓释以及报告与反馈几个环节，
+          各环节之间并非单向线性，而是持续迭代。
+        </p>
+      </div>
+      <div class="flow">
+        <div class="flow-item">
+          <h3>风险识别</h3>
+          <p>梳理业务条线、产品结构和交易流程，找出可能产生损失的敞口来源与触发条件。</p>
+        </div>
+        <div class="flow-item">
+          <h3>计量与评估</h3>
+          <p>运用评级模型、风险价值、缺口分析、情景分析等工具，对风险大小和概率进行量化或定性判断。</p>
+        </div>
+        <div class="flow-item">
+          <h3>监测与预警</h3>
+          <p>设定关键风险指标与限额阈值，通过数据监控及时发现偏离趋势并触发预警。</p>
+        </div>
+        <div class="flow-item">
+          <h3>控制与缓释</h3>
+          <p>通过授信审批、限额管理、抵质押、对冲交易、保险和流程改造等方式降低风险敞口。</p>
+        </div>
+        <div class="flow-item">
+          <h3>报告与反馈</h3>
+          <p>向董事会、高管层和业务部门定期报告风险状况，并将结果反馈到政策与流程优化中。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 计量方法 + 侧栏 -->
+  <section id="methods">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Measurement</span>
+        <h2>常用计量方法与指标</h2>
+        <p>
+          计量工具的选择取决于风险类别、数据基础和管理目的。定量结果通常需要与专家判断、行业经验结合使用。
+        </p>
+      </div>
+      <div class="two-col">
+        <div class="article-block">
+          <h3>信用风险计量</h3>
+          <p>
+            信用风险计量关注违约概率、违约损失率和违约风险暴露三个核心要素。银行通过内部评级体系对客户和债项进行分级，
+            并结合历史违约数据与迁移矩阵估计参数，用于授信审批、定价参考和资本计量。
+          </p>
+          <ul>
+            <li>客户评级与债项评级相结合的二维评级框架</li>
+            <li>预期损失与非预期损失的区分</li>
+            <li>集中度指标：单一客户、集团客户与行业敞口占比</li>
+            <li>压力测试：在经济下行情景下评估不良率与资本占用变化</li>
+          </ul>
+
+          <h3>市场风险计量</h3>
+          <p>
+            市场风险常用风险价值、敏感性指标和压力测试三类工具。风险价值反映在给定置信水平和持有期内可能的最大损失，
+            敏感性指标则衡量利率、汇率等因子单位变动对头寸价值的影响。
+          </p>
+          <ul>
+            <li>风险价值：方差—协方差法、历史模拟法、蒙特卡洛模拟</li>
+            <li>利率敏感性缺口与久期分析</li>
+            <li>外汇敞口与净外汇头寸监控</li>
+            <li>返回检验与模型验证，检验计量结果可靠性</li>
+          </ul>
+
+          <h3>操作风险计量</h3>
+          <p>
+            操作风险数据相对分散，通常以损失事件数据库为基础，结合业务流程与控制自评估，
+            形成关键风险指标体系和资本计量参考。
+          </p>
+          <ul>
+            <li>损失事件收集与分类分级</li>
+            <li>风险与控制自评估</li>
+            <li>关键风险指标监测</li>
+            <li>情景分析与业务连续性演练</li>
+          </ul>
+
+          <h3>流动性风险计量</h3>
+          <p>
+            流动性管理侧重现金流的时间分布和融资来源的稳定性，常用指标包括流动性覆盖率、净稳定资金比例等，
+            并配合多情景下的现金流缺口测算。
+          </p>
+          <ul>
+            <li>合同期限与实际行为期限的差异分析</li>
+            <li>优质流动性资产规模与结构</li>
+            <li>融资集中度与批发性融资依赖度</li>
+            <li>压力情景下的现金流入流出预测</li>
+          </ul>
+        </div>
+
+        <aside>
+          <div class="side-card">
+            <h4>监管框架中的关键约束</h4>
+            <ul class="side-list">
+              <li><span class="num">01</span>资本充足率与杠杆率要求</li>
+              <li><span class="num">02</span>流动性覆盖率与净稳定资金比例</li>
+              <li><span class="num">03</span>大额风险暴露限额</li>
+              <li><span class="num">04</span>贷款分类与拨备计提规则</li>
+              <li><span class="num">05</span>压力测试与恢复处置计划</li>
+            </ul>
+          </div>
+          <div class="side-card">
+            <h4>三道防线</h4>
+            <p class="side-note" style="margin-bottom:12px;">
+              第一道防线为业务部门，承担风险的第一责任；第二道防线为风险管理与合规部门，负责政策制定与独立监督；
+              第三道防线为内部审计，对前两道防线的有效性进行独立评价。
+            </p>
+          </div>
+          <div class="side-card">
+            <h4>治理结构要点</h4>
+            <ul class="side-list">
+              <li>董事会承担风险管理最终责任</li>
+              <li>高管层负责政策执行与资源配置</li>
+              <li>风险偏好需与战略和资本规划衔接</li>
+              <li>风险报告路径保持独立与畅通</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- 指标表 -->
+  <section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Indicators</span>
+        <h2>常见风险指标与管理关注点</h2>
+        <p>下表按风险类别列出常用指标及其主要管理用途，供理解指标体系时参考。</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>风险类别</th>
+              <th>常用指标</th>
+              <th>主要用途</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>信用风险</strong></td>
+              <td>不良贷款率、拨备覆盖率、逾期率、集中度占比</td>
+              <td>衡量资产质量与风险抵补能力，识别集中度隐患</td>
+            </tr>
+            <tr>
+              <td><strong>市场风险</strong></td>
+              <td>风险价值、敏感性缺口、久期、外汇敞口</td>
+              <td>评估市场因子波动对收益和净值的影响</td>
+            </tr>
+            <tr>
+              <td><strong>操作风险</strong></td>
+              <td>损失事件数量与金额、关键风险指标、控制缺陷数</td>
+              <td>跟踪流程与系统薄弱环节，推动整改</td>
+            </tr>
+            <tr>
+              <td><strong>流动性风险</strong></td>
+              <td>流动性覆盖率、净稳定资金比例、流动性缺口</td>
+              <td>判断短期偿付能力与长期资金结构稳定性</td>
+            </tr>
+            <tr>
+              <td><strong>资本充足性</strong></td>
+              <td>资本充足率、核心一级资本充足率、杠杆率</td>
+              <td>约束风险资产扩张，保障损失吸收能力</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 实务要点 -->
+  <section id="practice" class="practice">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Practice</span>
+        <h2>实务中的管理要点</h2>
+        <p>制度设计之外，风险管理的效果很大程度取决于执行质量、数据基础和组织文化。</p>
+      </div>
+      <div class="practice-grid">
+        <div class="practice-item">
+          <h3>数据与系统基础</h3>
+          <p>统一客户、账户和交易数据口径，保证风险计量所依赖的数据完整、准确、可追溯，是模型有效运行的前提。</p>
+        </div>
+        <div class="practice-item">
+          <h3>限额与授权管理</h3>
+          <p>限额需要覆盖客户、行业、区域、产品等维度，并与授权体系挂钩，超限处理应有明确流程和责任归属。</p>
+        </div>
+        <div class="practice-item">
+          <h3>压力测试常态化</h3>
+          <p>压力测试不应只在监管要求时开展，而应嵌入日常管理，用于检验资本、流动性和盈利在不利情景下的承受能力。</p>
+        </div>
+        <div class="practice-item">
+          <h3>风险文化培育</h3>
+          <p>风险偏好需要通过考核、培训和问责机制传导到一线，避免风险管理与业务经营相互割裂。</p>
+        </div>
+        <div class="practice-item">
+          <h3>模型风险管理</h3>
+          <p>对模型的开发、验证、使用和退出进行全生命周期管理，关注假设合理性、数据代表性和结果稳定性。</p>
+        </div>
+        <div class="practice-item">
+          <h3>外部环境跟踪</h3>
+          <p>宏观经济、行业景气与监管政策的变化会改变风险分布，需要持续跟踪并及时调整风险策略。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">FAQ</span>
+        <h2>常见问题</h2>
+        <p>以下问题围绕商业银行风险管理的基本概念与实务理解展开。</p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            商业银行风险管理与内部控制是什么关系？
+            <span class="mark">+</span>
+          </button>
+          <div class="faq-a">
+            <p>
+              内部控制侧重于通过制度、流程和职责分工来保障经营活动的合规与效率，是风险管理的重要基础；
+              风险管理则更强调对各类风险的系统识别、计量与控制。两者相互支撑，内控失效往往会直接转化为操作风险事件。
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            为什么说信用风险是商业银行最主要的风险？
+            <span class="mark">+</span>
+          </button>
+          <div class="faq-a">
+            <p>
+              在多数银行的资产结构中，贷款等信用类资产占比较高，信用风险直接关系到利息收入和资产质量，
+              其损失一旦集中暴露，对资本和盈利的冲击较为明显。因此信用风险管理通常是银行风险体系中的重点。
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            风险价值能否完全反映市场风险水平？
+            <span class="mark">+</span>
+          </button>
+          <div class="faq-a">
+            <p>
+              风险价值基于历史数据和统计假设，无法覆盖极端市场情形和流动性骤降等情况，也存在模型假设偏差。
+              因此实务中通常将风险价值与压力测试、敏感性分析结合使用，而不是单独依赖单一指标。
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            中小银行开展风险管理有哪些现实难点？
+            <span class="mark">+</span>
+          </button>
+          <div class="faq-a">
+            <p>
+              常见难点包括数据积累不足、专业人才相对有限、系统建设投入较大，以及业务集中度偏高等。
+              应对方式通常包括依托成熟的风险工具与外部支持、强化限额与授权管理、优先完善关键流程的控制措施等。
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            流动性风险与信用风险会相互影响吗？
+            <span class="mark">+</span>
+          </button>
+          <div class="faq-a">
+            <p>
+              会。资产质量恶化可能削弱银行融资能力，加剧流动性压力；而流动性紧张又可能迫使银行低价处置资产，
+              进一步放大信用损失。因此流动性风险与信用风险需要放在统一的风险偏好和压力测试框架下统筹考虑。
+            </p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button">
+            压力测试在风险管理中起什么作用？
+            <span class="mark">+</span>
+          </button>
+          <div class="faq-a">
+            <p>
+              压力测试通过设定不利但可能发生的情景，评估银行在资本、流动性、盈利等方面的承受能力，
+              帮助管理层提前识别脆弱环节并制定应对预案，是连接风险计量与战略决策的重要工具。
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 页脚 -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>关于本站</h4>
+        <p>
+          本站围绕商业银行风险管理主题，整理风险类别、管理流程、计量方法与实务要点，
+          内容用于知识学习与信息参考，不构成任何投资、经营或合规建议。
+        </p>
+      </div>
+      <div>
+        <h4>内容导航</h4>
+        <ul>
+          <li><a href="#types">主要风险类型</a></li>
+          <li><a href="#framework">风险管理流程</a></li>
+          <li><a href="#methods">计量方法与指标</a></li>
+          <li><a href="#practice">实务管理要点</a></li>
+          <li><a href="#faq">常见问题</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>相关主题</h4>
+        <ul>
+          <li>信用评级与授信管理</li>
+          <li>资本充足与资本规划</li>
+          <li>资产负债与流动性管理</li>
+          <li>操作风险与内控合规</li>
+          <li>压力测试与恢复处置</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>商业银行风险管理 · 知识梳理与方法参考</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var items = document.querySelectorAll('.faq-item');
+  items.forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    var panel = item.querySelector('.faq-a');
+    btn.addEventListener('click', function(){
+      var isOpen = item.classList.contains('open');
+      items.forEach(function(other){
+        other.classList.remove('open');
+        other.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+                    </html>
